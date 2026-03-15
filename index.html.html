@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Opinion Ape — Every voice. One place.</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --green-dark:   #2d5a1b;
+  --green-mid:    #4a7c2f;
+  --green-btn:    #5a9e35;
+  --green-light:  #eaf4e0;
+  --green-pale:   #f4faf0;
+  --green-tag:    #d4ebbb;
+  --green-accent: #6abf3e;
+  --green-text:   #3a6b22;
+  --card-border:  #c8e0a8;
+  --white:        #ffffff;
+  --gray-text:    #7a8c6e;
+  --font:         'Nunito', sans-serif;
+  --max-w:        860px;
+  --content-w:    600px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font);
+  background: var(--green-pale);
+  color: var(--green-dark);
+  min-height: 100vh;
+}
+
+/* ============ TOP NAV ============ */
+.site-nav {
+  background: var(--green-dark);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+.site-nav-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+.nav-logo-svg {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+}
+.nav-logo-text {
+  font-size: 20px;
+  font-weight: 800;
+  color: white;
+  line-height: 1;
+}
+.nav-logo-text span { color: var(--green-accent); }
+.nav-tagline {
+  font-size: 11px;
+  color: #a8c990;
+  margin-top: 2px;
+}
+.nav-spacer { flex: 1; }
+.nav-notif {
+  width: 38px; height: 38px;
+  background: rgba(255,255,255,0.12);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+}
+
+/* ============ TAB BAR ============ */
+.tab-bar {
+  background: var(--green-dark);
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.tab-bar-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  gap: 4px;
+}
+.tab {
+  padding: 10px 18px;
+  font-family: var(--font);
+  font-size: 13px; font-weight: 700;
+  border: none;
+  background: transparent;
+  color: #8ab87a;
+  cursor: pointer;
+  border-radius: 8px 8px 0 0;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.tab.active { background: var(--green-pale); color: var(--green-dark); }
+
+/* ============ PAGE WRAPPER ============ */
+.page { display: none; }
+.page.active { display: block; }
+
+/* ============ CONTENT WIDTH ============ */
+.content-wrap {
+  max-width: var(--content-w);
+  margin: 0 auto;
+  padding: 28px 24px 60px;
+}
+
+/* Wide layout on big screens */
+@media (min-width: 860px) {
+  .home-layout {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 28px 24px 60px;
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 28px;
+    align-items: start;
+  }
+  .home-main { min-width: 0; }
+  .home-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: sticky;
+    top: 130px;
+  }
+}
+@media (max-width: 859px) {
+  .home-layout {
+    max-width: var(--content-w);
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  .home-sidebar { margin-top: 20px; }
+}
+
+/* ============ GREETING ============ */
+.greeting { margin-bottom: 16px; }
+.greeting h2 { font-size: 20px; font-weight: 800; color: var(--green-dark); }
+.greeting p  { font-size: 14px; color: var(--gray-text); margin-top: 3px; }
+
+/* ============ NEW SUGGESTION BUTTON ============ */
+.new-suggestion-btn {
+  background: var(--green-btn);
+  border-radius: 14px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(90,158,53,0.35);
+  margin-bottom: 20px;
+  transition: transform 0.15s, box-shadow 0.15s;
+  border: none;
+  width: 100%;
+  font-family: var(--font);
+  text-align: left;
+}
+.new-suggestion-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(90,158,53,0.45); }
+.ns-text h3 { color: white; font-size: 16px; font-weight: 800; }
+.ns-text p  { color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 2px; }
+.arrow-circle {
+  width: 38px; height: 38px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 18px; flex-shrink: 0;
+}
+
+/* ============ SORT TOGGLE ============ */
+.sort-toggle {
+  display: flex;
+  background: var(--green-dark);
+  border-radius: 10px;
+  padding: 4px;
+  gap: 2px;
+  margin-bottom: 16px;
+  width: fit-content;
+}
+.sort-btn {
+  padding: 7px 16px;
+  border-radius: 7px;
+  font-family: var(--font);
+  font-size: 12px; font-weight: 700;
+  border: none;
+  background: transparent;
+  color: #8ab87a;
+  cursor: pointer;
+  transition: all 0.18s;
+  white-space: nowrap;
+}
+.sort-btn.active {
+  background: var(--green-pale);
+  color: var(--green-dark);
+}
+
+/* ============ CARDS ============ */
+.card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.card {
+  background: var(--white);
+  border: 1.5px solid var(--card-border);
+  border-radius: 14px;
+  padding: 14px 16px;
+  border-left: 4px solid var(--green-accent);
+  transition: box-shadow 0.2s;
+}
+.card:hover { box-shadow: 0 4px 16px rgba(45,90,27,0.08); }
+.card.just-added { animation: card-pop 0.5s ease; }
+@keyframes card-pop {
+  0%   { background: #d4f0bb; transform: scale(1.01); }
+  100% { background: var(--white); transform: scale(1); }
+}
+.card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.tag {
+  background: var(--green-tag);
+  color: var(--green-text);
+  font-size: 11px; font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1px solid #b8d898;
+}
+.card-date { font-size: 11px; color: var(--gray-text); }
+.card-text { font-size: 14px; font-weight: 600; color: var(--green-dark); line-height: 1.5; margin-bottom: 10px; }
+.card-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.vote-btn {
+  background: var(--green-light);
+  border: 1.5px solid var(--card-border);
+  border-radius: 20px;
+  padding: 5px 13px;
+  font-family: var(--font);
+  font-size: 12px; font-weight: 700;
+  color: var(--green-text);
+  cursor: pointer;
+  display: flex; align-items: center; gap: 5px;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  user-select: none;
+}
+.vote-btn:hover { background: var(--card-border); }
+.vote-btn.voted { background: var(--green-accent); border-color: var(--green-btn); color: white; }
+.status-badge {
+  font-size: 11px; font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: var(--green-light);
+  color: var(--green-text);
+  border: 1px solid var(--card-border);
+}
+.manager-reply {
+  background: var(--green-light);
+  border-left: 3px solid var(--green-accent);
+  border-radius: 8px;
+  padding: 9px 12px;
+  margin-top: 8px;
+}
+.manager-reply strong { font-size: 11px; color: var(--green-text); display: block; margin-bottom: 3px; }
+.manager-reply p { font-size: 12px; color: var(--green-dark); line-height: 1.45; }
+
+/* Upgrade */
+.upgrade-prompt {
+  background: white;
+  border: 2px dashed var(--green-accent);
+  border-radius: 14px;
+  padding: 20px;
+  text-align: center;
+  margin-top: 4px;
+}
+.upgrade-prompt h4 { font-size: 15px; font-weight: 800; color: var(--green-dark); margin-bottom: 6px; }
+.upgrade-prompt p  { font-size: 13px; color: var(--gray-text); line-height: 1.5; margin-bottom: 14px; }
+.upgrade-btn {
+  background: var(--green-btn);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 24px;
+  font-family: var(--font);
+  font-size: 13px; font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(90,158,53,0.35);
+}
+
+/* ============ SIDEBAR WIDGETS ============ */
+.sidebar-card {
+  background: var(--white);
+  border: 1.5px solid var(--card-border);
+  border-radius: 14px;
+  border-left: 4px solid var(--green-accent);
+  padding: 16px;
+}
+.sidebar-card h4 { font-size: 14px; font-weight: 800; color: var(--green-dark); margin-bottom: 12px; }
+.sidebar-stat {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--green-light);
+  font-size: 13px;
+}
+.sidebar-stat:last-child { border-bottom: none; }
+.stat-label { color: var(--gray-text); }
+.stat-value { font-weight: 800; color: var(--green-dark); }
+.pulse-cta {
+  background: var(--green-btn);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-family: var(--font);
+  font-size: 13px; font-weight: 800;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  display: flex; align-items: center; justify-content: space-between;
+  box-shadow: 0 4px 10px rgba(90,158,53,0.3);
+  transition: transform 0.15s;
+}
+.pulse-cta:hover { transform: translateY(-1px); }
+
+/* ============ SCREEN SYSTEM (overlay panels) ============ */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  background: rgba(0,0,0,0.4);
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s;
+  overflow-y: auto;
+}
+.overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+.overlay-panel {
+  background: var(--green-pale);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 520px;
+  margin: auto;
+  overflow: hidden;
+  transform: translateY(30px);
+  transition: transform 0.25s;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+.overlay.open .overlay-panel { transform: translateY(0); }
+
+.overlay-header {
+  background: var(--green-pale);
+  padding: 20px 20px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1.5px solid var(--card-border);
+}
+.back-btn {
+  width: 36px; height: 36px;
+  background: var(--green-light);
+  border: 1.5px solid var(--card-border);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s;
+  border-style: solid;
+}
+.back-btn:hover { background: var(--card-border); }
+.overlay-header h2 { font-size: 17px; font-weight: 800; color: var(--green-dark); flex: 1; }
+
+/* ============ NEW SUGGESTION FORM ============ */
+.form-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.form-label { font-size: 12px; font-weight: 800; color: var(--green-dark); margin-bottom: 8px; }
+.category-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  padding: 7px 15px;
+  border-radius: 20px;
+  font-family: var(--font);
+  font-size: 12px; font-weight: 700;
+  cursor: pointer;
+  border: 1.5px solid var(--card-border);
+  background: white;
+  color: var(--gray-text);
+  transition: all 0.15s;
+}
+.chip.selected { background: var(--green-btn); border-color: var(--green-btn); color: white; }
+.suggestion-textarea {
+  width: 100%;
+  height: 130px;
+  border: 1.5px solid var(--card-border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-family: var(--font);
+  font-size: 14px;
+  color: var(--green-dark);
+  resize: none;
+  outline: none;
+  background: white;
+  transition: border-color 0.15s;
+  line-height: 1.55;
+}
+.suggestion-textarea:focus { border-color: var(--green-btn); border-width: 2px; }
+.char-count { font-size: 11px; color: var(--gray-text); text-align: right; margin-top: 4px; }
+.tone-box {
+  background: var(--green-light);
+  border-radius: 10px;
+  padding: 11px 14px;
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+}
+.tone-box-text .tone-title  { font-size: 12px; font-weight: 800; color: var(--green-text); }
+.tone-box-text .tone-result { font-size: 11px; color: var(--green-btn); margin-top: 2px; }
+.tone-icon {
+  width: 30px; height: 30px;
+  background: var(--green-btn);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 14px; flex-shrink: 0;
+}
+.anon-row {
+  display: flex; align-items: center; justify-content: space-between;
+  background: white;
+  border: 1.5px solid var(--card-border);
+  border-radius: 12px;
+  padding: 13px 16px;
+}
+.anon-row-text h4 { font-size: 14px; font-weight: 700; color: var(--green-dark); }
+.anon-row-text p  { font-size: 12px; color: var(--gray-text); margin-top: 2px; }
+.toggle-track {
+  width: 46px; height: 26px;
+  background: var(--card-border);
+  border-radius: 13px;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+.toggle-track.on { background: var(--green-btn); }
+.toggle-knob {
+  width: 22px; height: 22px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px; left: 2px;
+  transition: left 0.2s;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+.toggle-track.on .toggle-knob { left: 22px; }
+.submit-btn {
+  background: var(--green-btn);
+  color: white;
+  border: none;
+  border-radius: 24px;
+  padding: 16px;
+  font-family: var(--font);
+  font-size: 15px; font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(90,158,53,0.35);
+  transition: transform 0.15s, box-shadow 0.15s;
+  width: 100%;
+}
+.submit-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(90,158,53,0.45); }
+
+/* ============ CONFIRMATION ============ */
+.confirm-body {
+  padding: 32px 24px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  text-align: center;
+}
+.confirm-icon {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  border: 3px solid var(--green-accent);
+  background: var(--green-light);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 36px;
+  animation: pop-in 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+@keyframes pop-in {
+  from { transform: scale(0); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+.confirm-title { font-size: 24px; font-weight: 800; color: var(--green-dark); }
+.confirm-sub   { font-size: 14px; color: var(--gray-text); line-height: 1.55; max-width: 360px; }
+.confirm-card  {
+  width: 100%;
+  background: white;
+  border: 1.5px solid var(--card-border);
+  border-radius: 14px;
+  border-left: 4px solid var(--green-accent);
+  padding: 14px 16px;
+  text-align: left;
+}
+.confirm-card-label { font-size: 10px; font-weight: 800; color: var(--gray-text); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+.confirm-card-tag {
+  display: inline-block;
+  background: var(--green-tag);
+  color: var(--green-text);
+  font-size: 12px; font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1px solid #b8d898;
+}
+.confirm-card-text { font-size: 14px; font-weight: 700; color: var(--green-dark); line-height: 1.45; }
+.confirm-countdown { font-size: 13px; color: var(--gray-text); }
+.confirm-countdown span { font-weight: 800; color: var(--green-btn); }
+
+/* ============ SURVEY ============ */
+.survey-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.survey-progress-label { display: flex; justify-content: space-between; }
+.survey-progress-label span { font-size: 12px; color: var(--gray-text); }
+.survey-progress-label span:last-child { color: var(--green-btn); font-weight: 700; }
+.progress-track { height: 6px; background: var(--card-border); border-radius: 3px; overflow: hidden; }
+.progress-fill  { height: 100%; background: var(--green-btn); border-radius: 3px; transition: width 0.4s ease; }
+.question-card {
+  background: white;
+  border: 1.5px solid var(--card-border);
+  border-radius: 14px;
+  border-top: 5px solid var(--green-btn);
+  padding: 16px;
+}
+.question-card h3 { font-size: 15px; font-weight: 800; color: var(--green-dark); line-height: 1.45; margin-bottom: 6px; }
+.question-card p  { font-size: 12px; color: var(--gray-text); }
+.options-list { display: flex; flex-direction: column; gap: 8px; }
+.option {
+  display: flex; align-items: center; gap: 12px;
+  background: white;
+  border: 1.5px solid var(--card-border);
+  border-radius: 10px;
+  padding: 13px 16px;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: var(--font);
+}
+.option:hover { background: var(--green-light); }
+.option.selected { background: var(--green-light); border-color: var(--green-btn); border-width: 2px; }
+.radio { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--card-border); flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+.option.selected .radio { background: var(--green-btn); border-color: var(--green-btn); }
+.radio-dot { width: 8px; height: 8px; background: white; border-radius: 50%; opacity: 0; transition: opacity 0.15s; }
+.option.selected .radio-dot { opacity: 1; }
+.option-text { font-size: 14px; font-weight: 600; color: var(--green-dark); }
+.next-btn {
+  background: var(--green-btn);
+  color: white;
+  border: none;
+  border-radius: 24px;
+  padding: 15px;
+  font-family: var(--font);
+  font-size: 14px; font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(90,158,53,0.3);
+  transition: transform 0.15s;
+  width: 100%;
+}
+.next-btn:hover { transform: translateY(-2px); }
+.skip-link { text-align: center; font-size: 12px; color: var(--gray-text); cursor: pointer; padding: 4px; }
+.skip-link:hover { color: var(--green-text); }
+.survey-done {
+  padding: 40px 24px;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 16px; text-align: center;
+}
+.survey-done .done-icon { font-size: 56px; animation: pop-in 0.4s cubic-bezier(0.34,1.56,0.64,1) both; }
+.survey-done h3 { font-size: 22px; font-weight: 800; color: var(--green-dark); }
+.survey-done p  { font-size: 14px; color: var(--gray-text); line-height: 1.55; max-width: 320px; }
+.done-home-btn {
+  background: var(--green-btn); color: white; border: none;
+  border-radius: 24px; padding: 14px 32px;
+  font-family: var(--font); font-size: 14px; font-weight: 800;
+  cursor: pointer; box-shadow: 0 4px 14px rgba(90,158,53,0.35);
+  margin-top: 8px;
+}
+
+/* ============ LOGIN PAGE ============ */
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--green-pale);
+  padding: 40px 24px;
+}
+.login-box {
+  background: white;
+  border: 1.5px solid var(--card-border);
+  border-radius: 20px;
+  padding: 40px 36px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 8px 32px rgba(45,90,27,0.1);
+}
+.login-logo-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+.login-logo-svg { width: 52px; height: 52px; }
+.login-logo-name { font-size: 28px; font-weight: 800; color: var(--green-dark); }
+.login-logo-name span { color: var(--green-accent); }
+.login-divider { height: 1px; background: var(--card-border); margin-bottom: 24px; }
+.login-label { font-size: 13px; font-weight: 800; color: var(--green-dark); margin-bottom: 12px; }
+.login-sub    { font-size: 12px; color: var(--gray-text); margin-bottom: 20px; }
+.code-boxes   { display: flex; gap: 8px; margin-bottom: 8px; justify-content: center; }
+.code-box {
+  width: 48px; height: 56px;
+  background: white;
+  border: 1.5px solid var(--card-border);
+  border-radius: 10px;
+  text-align: center;
+  font-family: var(--font);
+  font-size: 22px; font-weight: 800;
+  color: var(--green-dark);
+  outline: none;
+  transition: border-color 0.15s;
+}
+.code-box:focus { border-color: var(--green-btn); border-width: 2px; }
+.login-hint { font-size: 11px; color: var(--gray-text); margin-bottom: 24px; text-align: center; }
+.login-btn {
+  width: 100%;
+  background: var(--green-btn);
+  color: white;
+  border: none;
+  border-radius: 24px;
+  padding: 15px;
+  font-family: var(--font);
+  font-size: 15px; font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(90,158,53,0.35);
+  transition: transform 0.15s, box-shadow 0.15s;
+  margin-bottom: 18px;
+}
+.login-btn:hover { transform: translateY(-2px); }
+.anon-toggle-row { display: flex; align-items: center; gap: 10px; justify-content: center; margin-bottom: 8px; }
+.anon-label  { font-size: 13px; color: var(--gray-text); }
+.toggle-status { font-size: 12px; color: var(--gray-text); }
+.login-footer { font-size: 11px; color: #bbb; text-align: center; }
+
+/* ============ MONTHLY PULSE PAGE ============ */
+.pulse-page { max-width: var(--content-w); margin: 0 auto; padding: 28px 24px 60px; }
+.pulse-intro {
+  background: white;
+  border: 1.5px solid var(--card-border);
+  border-radius: 14px;
+  border-left: 4px solid var(--green-accent);
+  padding: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.pulse-intro-icon { font-size: 40px; flex-shrink: 0; }
+.pulse-intro h3 { font-size: 16px; font-weight: 800; color: var(--green-dark); margin-bottom: 4px; }
+.pulse-intro p  { font-size: 13px; color: var(--gray-text); line-height: 1.5; }
+.pulse-start-btn {
+  background: var(--green-btn); color: white; border: none;
+  border-radius: 24px; padding: 15px;
+  font-family: var(--font); font-size: 15px; font-weight: 800;
+  cursor: pointer; box-shadow: 0 4px 14px rgba(90,158,53,0.35);
+  width: 100%; transition: transform 0.15s;
+}
+.pulse-start-btn:hover { transform: translateY(-2px); }
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 520px) {
+  .login-box { padding: 28px 20px; }
+  .code-box { width: 42px; height: 50px; font-size: 18px; }
+  .site-nav-inner { padding: 0 16px; }
+  .tab { padding: 10px 12px; font-size: 12px; }
+  .home-layout { padding: 16px 12px 60px; }
+  .content-wrap { padding: 16px 12px 60px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ========== LOGIN PAGE ========== -->
+<div id="loginPage">
+  <div class="login-page">
+    <div class="login-box">
+      <div class="login-logo-wrap">
+        <svg class="login-logo-svg" viewBox="60 75 110 100" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="112" cy="108" rx="52" ry="50" fill="#639922"/>
+          <ellipse cx="63" cy="110" rx="14" ry="17" fill="#639922"/>
+          <ellipse cx="63" cy="111" rx="8" ry="11" fill="#97C459"/>
+          <ellipse cx="161" cy="110" rx="14" ry="17" fill="#639922"/>
+          <ellipse cx="161" cy="111" rx="8" ry="11" fill="#97C459"/>
+          <ellipse cx="112" cy="118" rx="36" ry="34" fill="#97C459"/>
+          <circle cx="97" cy="100" r="9" fill="#27500A"/>
+          <circle cx="99" cy="98" r="3.5" fill="white"/>
+          <path d="M115 99 Q124 90 133 99" fill="none" stroke="#27500A" stroke-width="5.5" stroke-linecap="round"/>
+          <rect x="88" y="118" width="48" height="30" rx="9" fill="#27500A"/>
+          <polygon points="98,147 86,160 108,149" fill="#27500A"/>
+          <circle cx="100" cy="133" r="3" fill="white"/>
+          <circle cx="112" cy="133" r="3" fill="white"/>
+          <circle cx="124" cy="133" r="3" fill="white"/>
+        </svg>
+        <div>
+          <div class="login-logo-name">Opinion <span>Ape</span></div>
+        </div>
+      </div>
+      <div class="login-divider"></div>
+      <div class="login-label">Enter your access code</div>
+      <div class="login-sub">Provided by your manager</div>
+      <div class="code-boxes">
+        <input class="code-box" maxlength="1" type="text" id="c0">
+        <input class="code-box" maxlength="1" type="text" id="c1">
+        <input class="code-box" maxlength="1" type="text" id="c2">
+        <input class="code-box" maxlength="1" type="text" id="c3">
+        <input class="code-box" maxlength="1" type="text" id="c4">
+        <input class="code-box" maxlength="1" type="text" id="c5">
+      </div>
+      <div class="login-hint">Your identity is always protected</div>
+      <button class="login-btn" onclick="enterApp()">Continue →</button>
+      <div class="anon-toggle-row">
+        <span class="anon-label">Submit anonymously?</span>
+        <div class="toggle-track" id="loginAnonToggle" onclick="this.classList.toggle('on'); document.getElementById('loginAnonStatus').textContent = this.classList.contains('on') ? 'On' : 'Off'">
+          <div class="toggle-knob"></div>
+        </div>
+        <span class="toggle-status" id="loginAnonStatus">Off</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== MAIN APP (hidden until login) ========== -->
+<div id="mainApp" style="display:none;">
+
+  <!-- Site Nav -->
+  <nav class="site-nav">
+    <div class="site-nav-inner">
+      <a class="nav-logo" href="#">
+        <svg class="nav-logo-svg" viewBox="60 75 110 100" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="112" cy="108" rx="52" ry="50" fill="#639922"/>
+          <ellipse cx="63" cy="110" rx="14" ry="17" fill="#639922"/>
+          <ellipse cx="63" cy="111" rx="8" ry="11" fill="#97C459"/>
+          <ellipse cx="161" cy="110" rx="14" ry="17" fill="#639922"/>
+          <ellipse cx="161" cy="111" rx="8" ry="11" fill="#97C459"/>
+          <ellipse cx="112" cy="118" rx="36" ry="34" fill="#97C459"/>
+          <circle cx="97" cy="100" r="9" fill="#27500A"/>
+          <circle cx="99" cy="98" r="3.5" fill="white"/>
+          <path d="M115 99 Q124 90 133 99" fill="none" stroke="#27500A" stroke-width="5.5" stroke-linecap="round"/>
+          <rect x="88" y="118" width="48" height="30" rx="9" fill="#27500A"/>
+          <polygon points="98,147 86,160 108,149" fill="#27500A"/>
+          <circle cx="100" cy="133" r="3" fill="white"/>
+          <circle cx="112" cy="133" r="3" fill="white"/>
+          <circle cx="124" cy="133" r="3" fill="white"/>
+        </svg>
+        <div>
+          <div class="nav-logo-text">Opinion <span>Ape</span></div>
+          <div class="nav-tagline">Every voice. One place.</div>
+        </div>
+      </a>
+      <div class="nav-spacer"></div>
+      <button class="nav-notif">🔔</button>
+    </div>
+  </nav>
+
+  <!-- Tab Bar -->
+  <div class="tab-bar">
+    <div class="tab-bar-inner">
+      <button class="tab active" onclick="showPage('homePage', this)">Suggestions</button>
+      <button class="tab" onclick="showPage('pulsePage', this)">Monthly Pulse</button>
+      <button class="tab" onclick="showPage('surveyPage', this)">Survey</button>
+    </div>
+  </div>
+
+  <!-- ===== HOME PAGE ===== -->
+  <div class="page active" id="homePage">
+    <div class="home-layout">
+      <div class="home-main">
+        <div class="greeting">
+          <h2>Hello LRL employees 👋</h2>
+          <p>What's on your mind today?</p>
+        </div>
+        <button class="new-suggestion-btn" onclick="openOverlay('newSuggestionOverlay')">
+          <div class="ns-text">
+            <h3>New suggestion</h3>
+            <p>Tap to share your thoughts</p>
+          </div>
+          <div class="arrow-circle">→</div>
+        </button>
+
+        <!-- Sort toggle -->
+        <div class="sort-toggle">
+          <button class="sort-btn active" id="sortRecent" onclick="setSort('recent', this)">Most recent</button>
+          <button class="sort-btn" id="sortTop" onclick="setSort('top', this)">Top voted</button>
+        </div>
+
+        <div class="card-list" id="cardList"></div>
+      </div>
+
+      <div class="home-sidebar">
+        <div class="sidebar-card">
+          <h4>📊 This month's stats</h4>
+          <div class="sidebar-stat"><span class="stat-label">Total suggestions</span><span class="stat-value">47</span></div>
+          <div class="sidebar-stat"><span class="stat-label">Responses received</span><span class="stat-value">82</span></div>
+          <div class="sidebar-stat"><span class="stat-label">In progress</span><span class="stat-value">6</span></div>
+          <div class="sidebar-stat"><span class="stat-label">Completed</span><span class="stat-value">12</span></div>
+        </div>
+        <button class="pulse-cta" onclick="showPage('pulsePage', document.querySelectorAll('.tab')[1])">
+          <div>
+            <div style="font-size:13px; font-weight:800;">Monthly Pulse is live</div>
+            <div style="font-size:11px; opacity:0.85; margin-top:2px;">Takes about 2 minutes</div>
+          </div>
+          <span style="font-size:18px;">→</span>
+        </button>
+        <div class="sidebar-card">
+          <h4>🏷️ Top categories</h4>
+          <div class="sidebar-stat"><span class="stat-label">Facilities</span><span class="stat-value">18</span></div>
+          <div class="sidebar-stat"><span class="stat-label">Workload</span><span class="stat-value">14</span></div>
+          <div class="sidebar-stat"><span class="stat-label">General</span><span class="stat-value">9</span></div>
+          <div class="sidebar-stat"><span class="stat-label">Safety</span><span class="stat-value">6</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PULSE PAGE ===== -->
+  <div class="page" id="pulsePage">
+    <div class="pulse-page">
+      <div class="pulse-intro">
+        <div class="pulse-intro-icon">📊</div>
+        <div>
+          <h3>Monthly Pulse Check</h3>
+          <p>Your quick monthly check-in. Anonymous, only takes about 2 minutes. Helps your managers understand how things are going.</p>
+        </div>
+      </div>
+      <div id="surveyContainer">
+        <!-- Survey rendered by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SURVEY PAGE ===== -->
+  <div class="page" id="surveyPage">
+    <div class="content-wrap" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:40vh;gap:14px;text-align:center;">
+      <div style="font-size:52px;">📋</div>
+      <div style="font-size:18px;font-weight:800;color:var(--green-dark);">No surveys right now</div>
+      <div style="font-size:14px;color:var(--gray-text);max-width:340px;line-height:1.55;">Your manager will send you a notification when a new survey is available.</div>
+    </div>
+  </div>
+
+</div><!-- end #mainApp -->
+
+<!-- ========== NEW SUGGESTION OVERLAY ========== -->
+<div class="overlay" id="newSuggestionOverlay">
+  <div class="overlay-panel">
+    <div class="overlay-header">
+      <button class="back-btn" onclick="closeOverlay('newSuggestionOverlay')">←</button>
+      <h2>New Suggestion</h2>
+      <span style="font-size:11px; font-weight:700; color:var(--green-btn); background:var(--green-light); padding:4px 10px; border-radius:20px; border:1px solid var(--card-border);">🔒 Anonymous</span>
+    </div>
+    <div class="form-body">
+      <div>
+        <div class="form-label">Category</div>
+        <div class="category-chips">
+          <div class="chip selected" onclick="selectChip(this)">General</div>
+          <div class="chip" onclick="selectChip(this)">Facilities</div>
+          <div class="chip" onclick="selectChip(this)">Workload</div>
+          <div class="chip" onclick="selectChip(this)">Safety</div>
+          <div class="chip" onclick="selectChip(this)">Equipment</div>
+          <div class="chip" onclick="selectChip(this)">Other</div>
+        </div>
+      </div>
+      <div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;">
+          <div class="form-label">Your suggestion</div>
+          <span class="char-count" id="charCount">0 / 300</span>
+        </div>
+        <textarea class="suggestion-textarea" id="suggestionText" placeholder="Share your idea or concern..." oninput="updateChar(this)" maxlength="300"></textarea>
+      </div>
+      <div class="tone-box">
+        <div class="tone-box-text">
+          <div class="tone-title">Tone check</div>
+          <div class="tone-result" id="toneResult">Start typing to check tone</div>
+        </div>
+        <div class="tone-icon" id="toneIcon">✦</div>
+      </div>
+      <div class="anon-row">
+        <div class="anon-row-text">
+          <h4>Submit anonymously</h4>
+          <p>Your name will not be shown</p>
+        </div>
+        <div class="toggle-track on" id="formAnonToggle" onclick="this.classList.toggle('on')">
+          <div class="toggle-knob"></div>
+        </div>
+      </div>
+      <button class="submit-btn" onclick="submitSuggestion()">Submit suggestion →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== CONFIRMATION OVERLAY ========== -->
+<div class="overlay" id="confirmOverlay">
+  <div class="overlay-panel">
+    <div class="confirm-body">
+      <div class="confirm-icon">✓</div>
+      <div class="confirm-title">Suggestion submitted!</div>
+      <div class="confirm-sub">Thanks for sharing your idea. Your manager has been notified and will review it soon.</div>
+      <div class="confirm-card">
+        <div class="confirm-card-label">Category</div>
+        <span class="confirm-card-tag" id="confirmTag">General</span>
+      </div>
+      <div class="confirm-card">
+        <div class="confirm-card-label">Your suggestion</div>
+        <div class="confirm-card-text" id="confirmText"></div>
+      </div>
+      <div class="confirm-countdown">Returning to home in <span id="countdown">5</span>s</div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============ LOGIN ============
+function enterApp() {
+  document.getElementById('loginPage').style.display = 'none';
+  document.getElementById('mainApp').style.display = 'block';
+  renderCards();
+  renderSurvey();
+}
+
+// Code box auto-advance
+document.querySelectorAll('.code-box').forEach((box, i, arr) => {
+  box.addEventListener('input', () => { if (box.value && i < arr.length - 1) arr[i+1].focus(); });
+  box.addEventListener('keydown', e => { if (e.key === 'Backspace' && !box.value && i > 0) arr[i-1].focus(); });
+});
+
+// ============ PAGE TABS ============
+function showPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+
+// ============ OVERLAYS ============
+function openOverlay(id) {
+  document.getElementById(id).classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeOverlay(id) {
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ============ SUGGESTION FORM ============
+function selectChip(el) {
+  document.querySelectorAll('#newSuggestionOverlay .chip').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function updateChar(el) {
+  const len = el.value.length;
+  document.getElementById('charCount').textContent = `${len} / 300`;
+  const toneResult = document.getElementById('toneResult');
+  const toneIcon   = document.getElementById('toneIcon');
+  if (len < 10) {
+    toneResult.textContent = 'Start typing to check tone';
+    toneIcon.textContent = '✦';
+    toneIcon.style.background = 'var(--gray-text)';
+  } else if (len < 50) {
+    toneResult.textContent = 'Sounds constructive and clear ✓';
+    toneIcon.textContent = '✓';
+    toneIcon.style.background = 'var(--green-btn)';
+  } else {
+    toneResult.textContent = 'Great detail — managers love this!';
+    toneIcon.textContent = '★';
+    toneIcon.style.background = 'var(--green-accent)';
+  }
+}
+
+// ============ SUBMIT ============
+let countdownTimer;
+function submitSuggestion() {
+  const text = document.getElementById('suggestionText').value.trim();
+  const tag  = document.querySelector('#newSuggestionOverlay .chip.selected')?.textContent || 'General';
+
+  const newS = {
+    id: Date.now(), tag, date: 'Just now',
+    text: `"${text || 'No suggestion text entered.'}"`,
+    votes: 0, status: 'Received', reply: null, isNew: true
+  };
+  suggestions.unshift(newS);
+  renderCards();
+
+  document.getElementById('confirmTag').textContent  = tag;
+  document.getElementById('confirmText').textContent = newS.text;
+
+  closeOverlay('newSuggestionOverlay');
+  openOverlay('confirmOverlay');
+
+  clearInterval(countdownTimer);
+  let secs = 5;
+  document.getElementById('countdown').textContent = secs;
+  countdownTimer = setInterval(() => {
+    secs--;
+    const el = document.getElementById('countdown');
+    if (el) el.textContent = secs;
+    if (secs <= 0) {
+      clearInterval(countdownTimer);
+      closeOverlay('confirmOverlay');
+      document.getElementById('suggestionText').value = '';
+      updateChar({ value: '' });
+    }
+  }, 1000);
+}
+
+// ============ CARDS ============
+const suggestions = [
+  { id:1,  tag:"Facilities", date:"2 days ago",   text:'"Break room ventilation needs improving in summer."',          votes:12, status:"Received",    reply:"We're looking into this — thank you.", isNew:false },
+  { id:2,  tag:"Workload",   date:"5 days ago",   text:'"Shift rota needs more notice for changes."',                  votes:8,  status:"Received",    reply:null, isNew:false },
+  { id:3,  tag:"General",    date:"1 week ago",   text:'"Car park lighting is too dim at night."',                     votes:3,  status:"Reviewed",    reply:null, isNew:false },
+  { id:4,  tag:"Facilities", date:"1 week ago",   text:'"The kitchen microwave needs replacing — it takes forever."',  votes:21, status:"In Progress", reply:"New microwave has been ordered, arriving next week!", isNew:false },
+  { id:5,  tag:"Workload",   date:"2 weeks ago",  text:'"We need more support staff on Mondays."',                     votes:15, status:"Reviewed",    reply:null, isNew:false },
+  { id:6,  tag:"General",    date:"2 weeks ago",  text:'"Would love a team social event before summer."',              votes:34, status:"Received",    reply:null, isNew:false },
+  { id:7,  tag:"Facilities", date:"3 weeks ago",  text:'"The printer on floor 2 jams constantly."',                    votes:9,  status:"In Progress", reply:null, isNew:false },
+  { id:8,  tag:"Workload",   date:"3 weeks ago",  text:'"More flexible working hours would help with commuting."',     votes:27, status:"Received",    reply:null, isNew:false },
+  { id:9,  tag:"General",    date:"1 month ago",  text:'"Staff noticeboard in the break room hasn\'t been updated."',  votes:6,  status:"Reviewed",    reply:null, isNew:false },
+  { id:10, tag:"Facilities", date:"1 month ago",  text:'"Disabled parking bays are often taken by others."',           votes:18, status:"Received",    reply:"We're looking into signage improvements.", isNew:false },
+];
+const voted = new Set();
+let sortMode = 'recent';
+
+function setSort(mode, btn) {
+  sortMode = mode;
+  document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCards();
+}
+
+function renderCards() {
+  const list = document.getElementById('cardList');
+  if (!list) return;
+
+  let sorted = [...suggestions];
+  if (sortMode === 'top') {
+    sorted.sort((a,b) => b.votes - a.votes);
+  } else {
+    // Most recent: new items first, then by id descending (proxy for recency)
+    sorted.sort((a,b) => {
+      if (a.isNew && !b.isNew) return -1;
+      if (!a.isNew && b.isNew) return 1;
+      return b.id - a.id;
+    });
+  }
+
+  list.innerHTML = '';
+  sorted.forEach(s => {
+    const isVoted = voted.has(s.id);
+    const card = document.createElement('div');
+    card.className = 'card' + (s.isNew ? ' just-added' : '');
+    card.dataset.id = s.id;
+    if (s.isNew) s.isNew = false;
+    card.innerHTML = `
+      <div class="card-top">
+        <span class="tag">${s.tag}</span>
+        <span class="card-date">${s.date}</span>
+      </div>
+      <p class="card-text">${s.text}</p>
+      <div class="card-actions">
+        <button class="vote-btn ${isVoted ? 'voted' : ''}" onclick="toggleVote(${s.id})">
+          ▲ <span>${s.votes} vote${s.votes !== 1 ? 's' : ''}</span>
+        </button>
+        <span class="status-badge">${s.status}</span>
+      </div>
+      ${s.reply ? `<div class="manager-reply"><strong>Manager replied</strong><p>"${s.reply}"</p></div>` : ''}
+    `;
+    list.appendChild(card);
+  });
+
+  const prompt = document.createElement('div');
+  prompt.className = 'upgrade-prompt';
+  prompt.innerHTML = `
+    <h4>You've reached the free limit 🎉</h4>
+    <p>Your team has submitted 100 suggestions. Upgrade to unlock unlimited submissions and advanced reporting.</p>
+    <button class="upgrade-btn">Upgrade now →</button>
+  `;
+  list.appendChild(prompt);
+}
+
+function toggleVote(id) {
+  const s = suggestions.find(x => x.id === id);
+  if (!s) return;
+  if (voted.has(id)) { voted.delete(id); s.votes--; }
+  else { voted.add(id); s.votes++; }
+  renderCards();
+}
+
+// ============ SURVEY ============
+const surveyQuestions = [
+  { q:"How satisfied are you with your working environment?",    opts:["Very satisfied","Satisfied","Neutral","Dissatisfied","Very dissatisfied"] },
+  { q:"How supported do you feel by your direct manager?",       opts:["Very supported","Somewhat supported","Neutral","Not very supported","Not supported at all"] },
+  { q:"Do you feel your suggestions are acted on?",              opts:["Always","Usually","Sometimes","Rarely","Never"] },
+  { q:"How would you rate team communication?",                  opts:["Excellent","Good","Fair","Poor","Very poor"] },
+  { q:"Would you recommend this company as a place to work?",    opts:["Definitely","Probably","Not sure","Probably not","Definitely not"] },
+];
+let currentQ = 0;
+let surveyAnswers = [];
+
+function renderSurvey() {
+  const container = document.getElementById('surveyContainer');
+  if (!container) return;
+
+  if (currentQ >= surveyQuestions.length) {
+    container.innerHTML = `
+      <div class="survey-done">
+        <div class="done-icon">🎉</div>
+        <h3>Thank you!</h3>
+        <p>Your responses have been submitted. Your feedback helps make this a better place to work.</p>
+        <button class="done-home-btn" onclick="showPage('homePage', document.querySelectorAll('.tab')[0]); resetSurvey();">Back to home →</button>
+      </div>
+    `;
+    return;
+  }
+
+  const q   = surveyQuestions[currentQ];
+  const pct = Math.round((currentQ / surveyQuestions.length) * 100);
+  container.innerHTML = `
+    <div style="margin-bottom:8px;">
+      <div class="survey-progress-label">
+        <span>Question ${currentQ+1} of ${surveyQuestions.length}</span>
+        <span>${pct}%</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+    </div>
+    <div class="question-card">
+      <h3>${q.q}</h3>
+      <p>Select one answer below</p>
+    </div>
+    <div class="options-list">
+      ${q.opts.map((o,i) => `
+        <div class="option" onclick="selectOption(this,${i})">
+          <div class="radio"><div class="radio-dot"></div></div>
+          <span class="option-text">${o}</span>
+        </div>
+      `).join('')}
+    </div>
+    <button class="next-btn" onclick="nextQuestion()">${currentQ < surveyQuestions.length - 1 ? 'Next question →' : 'Submit survey →'}</button>
+    <div class="skip-link" onclick="nextQuestion()">Skip this question</div>
+  `;
+}
+
+function selectOption(el) {
+  document.querySelectorAll('#surveyContainer .option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function nextQuestion() {
+  const selected = document.querySelector('#surveyContainer .option.selected');
+  surveyAnswers[currentQ] = selected ? selected.querySelector('.option-text').textContent : null;
+  currentQ++;
+  renderSurvey();
+}
+function resetSurvey() { currentQ = 0; surveyAnswers = []; renderSurvey(); }
+</script>
+</body>
+</html>
